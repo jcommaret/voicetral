@@ -16,7 +16,9 @@
     "react-native": "0.76.7",
     "react-native-dotenv": "^3.4.11",
     "expo-speech": "~13.0.1",
-    "expo-dev-client": "~5.0.12"
+    "expo-dev-client": "~5.0.12",
+    "@expo/vector-icons": "^14.0.2",
+    "expo-localization": "~16.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",
