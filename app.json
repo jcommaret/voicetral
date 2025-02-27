@@ -33,6 +33,18 @@
       "eas": {
         "projectId": "8498e4e0-34c6-441b-ad77-b7f6a7cec8ea"
       }
-    }
+    },
+    "plugins": [
+      [
+        "expo-speech-recognition",
+        {
+          "microphonePermission": "Autoriser $(PRODUCT_NAME) à utiliser le microphone.",
+          "speechRecognitionPermission": "Autoriser $(PRODUCT_NAME) à utiliser la reconnaissance vocale.",
+          "androidSpeechServicePackages": [
+            "com.google.android.googlequicksearchbox"
+          ]
+        }
+      ]
+    ]
   }
 }
