@@ -16,15 +16,19 @@
       "supportsTablet": true,
       "bundleIdentifier": "com.jcommaret.voicetral",
       "infoPlist": {
-        "ITSAppUsesNonExemptEncryption": false
-      }
+        "ITSAppUsesNonExemptEncryption": false,
+        "NSPhotoLibraryUsageDescription": "Cette application nécessite l'accès à votre photothèque pour sauvegarder des images.",
+        "NSMicrophoneUsageDescription": "Cette application nécessite l'accès au microphone pour la reconnaissance vocale."
+      },
+      "usesNotifications": false
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.jcommaret.voicetral"
+      "package": "com.jcommaret.voicetral",
+      "useNextNotificationsApi": false
     },
     "web": {
       "favicon": "./assets/favicon.png"
