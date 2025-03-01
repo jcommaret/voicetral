@@ -1,19 +1,26 @@
 import { StyleSheet } from "react-native";
-import { useColorScheme } from "react-native";
 
+// Styles fixes sans thème
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: '#fff',
     padding: 20,
     paddingTop: 50,
   },
-  containerDark: {
-    backgroundColor: "#000",
-  },
-  text: {
-    fontSize: 18,
+  // Styles de débogage
+  debugContainer: {
+    padding: 10,
     marginBottom: 10,
+    backgroundColor: '#f8f9fa',
+    borderWidth: 1,
+    borderColor: '#ddd',
+    borderRadius: 8,
+  },
+  debugTitle: {
+    fontWeight: 'bold',
+    marginBottom: 5,
+    color: '#333',
   },
   inputContainer: {
     width: "100%",
@@ -23,17 +30,14 @@ const styles = StyleSheet.create({
   recognizedText: {
     flex: 1,
     padding: 20,
-    backgroundColor: "#f0f0f0",
+    backgroundColor: '#f0f0f0',
+    color: '#000',
     borderRadius: 12,
     fontSize: 18,
     minHeight: 150,
     marginBottom: 10,
     textAlignVertical: "top",
-    color: "#000",
-  },
-  recognizedTextDark: {
-    backgroundColor: "#222",
-    color: "#fff",
+    textAlign: "left",
   },
   buttonsContainer: {
     flexDirection: "row",
@@ -42,23 +46,7 @@ const styles = StyleSheet.create({
     width: "100%",
     gap: 10,
   },
-  button: {
-    backgroundColor: "#007AFF",
-    padding: 15,
-    borderRadius: 25,
-    width: "80%",
-    alignItems: "center",
-  },
-  buttonListening: {
-    backgroundColor: "#FF3B30",
-  },
-  buttonText: {
-    color: "white",
-    fontSize: 16,
-    fontWeight: "bold",
-  },
   iconButton: {
-    backgroundColor: "#007AFF",
     padding: 10,
     borderRadius: 25,
     width: 50,
@@ -67,16 +55,46 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   clearButton: {
-    backgroundColor: "#8E8E93",
+    backgroundColor: '#8E8E93',
+  },
+  micButton: {
+    backgroundColor: '#007AFF',
+  },
+  listeningButton: {
+    backgroundColor: '#FF3B30',
   },
   sendButton: {
-    backgroundColor: "#34C759",
+    backgroundColor: '#34C759',
   },
-  themeToggle: {
-    position: 'absolute',
-    top: 10,
-    right: 10,
-    padding: 10,
+  disabledButton: {
+    opacity: 0.6,
+  },
+  responseContainer: {
+    backgroundColor: '#f9f9f9',
+    padding: 15,
+    borderRadius: 12,
+    marginTop: 20,
+    borderWidth: 1,
+    borderColor: '#e0e0e0',
+  },
+  responseHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 10,
+  },
+  responseTitle: {
+    fontSize: 18,
+    fontWeight: '600',
+    color: '#333',
+  },
+  responseText: {
+    fontSize: 16,
+    lineHeight: 24,
+    color: '#333',
+  },
+  speakButton: {
+    padding: 5,
   },
 });
 

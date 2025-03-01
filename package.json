@@ -9,16 +9,21 @@
     "web": "expo start --web"
   },
   "dependencies": {
+    "@expo/vector-icons": "^14.0.2",
+    "@mistralai/mistralai": "^1.5.0",
     "expo": "~52.0.37",
+    "expo-dev-client": "~5.0.12",
+    "expo-localization": "~16.0.1",
+    "expo-speech": "~13.0.1",
     "expo-speech-recognition": "^1.1.1",
     "expo-status-bar": "~2.0.1",
     "react": "18.3.1",
     "react-native": "0.76.7",
     "react-native-dotenv": "^3.4.11",
-    "expo-speech": "~13.0.1",
-    "expo-dev-client": "~5.0.12",
-    "@expo/vector-icons": "^14.0.2",
-    "expo-localization": "~16.0.1"
+    "react-native-polyfill-globals": "^3.1.0",
+    "react-native-reanimated": "~3.16.1",
+    "react-native-svg": "15.8.0",
+    "react-native-url-polyfill": "^2.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",
