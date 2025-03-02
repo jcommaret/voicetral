@@ -5,13 +5,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    padding: 20,
-    paddingTop: 50,
   },
   inputContainer: {
-    width: "100%",
-    padding: 10,
-    gap: 10,
+    display:'none',
   },
   recognizedText: {
     flex: 1,
@@ -58,12 +54,7 @@ const styles = StyleSheet.create({
     opacity: 0.6,
   },
   responseContainer: {
-    backgroundColor: '#f9f9f9',
-    padding: 15,
-    borderRadius: 12,
-    marginTop: 20,
-    borderWidth: 1,
-    borderColor: '#e0e0e0',
+    display: 'none',
   },
   responseHeader: {
     flexDirection: 'row',
@@ -84,6 +75,7 @@ const styles = StyleSheet.create({
   speakButton: {
     padding: 5,
   },
+ 
 });
 
 export default styles;

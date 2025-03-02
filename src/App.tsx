@@ -1,123 +1,145 @@
-import React, { useState } from "react";
-import { View, StatusBar as RNStatusBar, StyleSheet } from "react-native";
+import React, { useState, useEffect } from "react";
+import { View } from "react-native";
 import { StatusBar } from "expo-status-bar";
+import { ExpoSpeechRecognitionModule, useSpeechRecognitionEvent } from "expo-speech-recognition";
+import * as Speech from 'expo-speech';
 
-// Import components
-import {
-  ControlButtons,
-  ResponseDisplay,
-  startListening,
-  stopListening,
-  useSpeech,
-  useMistral
-} from './components';
+import { VoiceInput, ResponseDisplay } from './components';
+import { mistralApi } from './services/api';
+import styles from './styles/styles';
 
 export default function App() {
-  // State pour le texte prononcé
+  // State management
   const [spokenText, setSpokenText] = useState("");
+  const [mistralResponse, setMistralResponse] = useState("");
   const [isListening, setIsListening] = useState(false);
-  
-  // Hooks personnalisés
-  const { isSpeaking, speakResponse, stopSpeaking } = useSpeech();
-  const { mistralResponse, isLoading, getMistralResponse } = useMistral();
+  const [isLoading, setIsLoading] = useState(false);
+  const [isSpeaking, setIsSpeaking] = useState(false);
+  const [availableVoices, setAvailableVoices] = useState<Speech.Voice[]>([]);
+  const [selectedVoice, setSelectedVoice] = useState<Speech.Voice | null>(null);
 
-  // Fonctions
-  const handleStartListening = async () => {
-    setSpokenText(""); // Réinitialiser le texte précédent
-    await startListening();
-  };
+  // Load available voices on startup
+  useEffect(() => {
+    const loadVoices = async () => {
+      try {
+        const voices = await Speech.getAvailableVoicesAsync();
+        const frenchVoices = voices.filter(voice => voice.language.startsWith('fr'));
+        setAvailableVoices(frenchVoices.length > 0 ? frenchVoices : voices);
+        if (frenchVoices.length > 0) {
+          setSelectedVoice(frenchVoices[0]);
+        } else if (voices.length > 0) {
+          setSelectedVoice(voices[0]);
+        }
+      } catch (error) {
+        console.error("Erreur lors du chargement des voix:", error);
+      }
+    };
+    loadVoices();
+  }, []);
 
-  const handleStopListening = () => {
-    stopListening();
-    
-    // Si du texte a été reconnu, envoyer automatiquement la requête
+  // Speech recognition event handlers
+  useSpeechRecognitionEvent("start", () => setIsListening(true));
+  useSpeechRecognitionEvent("end", () => {
+    setIsListening(false);
     if (spokenText.trim()) {
-      handleGetMistralResponse();
+      getMistralResponse();
+    }
+  });
+  useSpeechRecognitionEvent("result", (event) => {
+    const transcript = event.results[0]?.transcript || "";
+    setSpokenText(transcript);
+  });
+
+  const startListening = async () => {
+    try {
+      const result = await ExpoSpeechRecognitionModule.requestPermissionsAsync();
+      if (!result.granted) {
+        alert("Microphone permission is required");
+        return;
+      }
+
+      ExpoSpeechRecognitionModule.start({
+        lang: "fr-FR",
+        interimResults: true,
+        maxAlternatives: 1,
+        continuous: false,
+        addsPunctuation: true,
+      });
+    } catch (error) {
+      console.error(error);
+      alert("An error occurred with voice recognition");
     }
   };
 
-  const handleGetMistralResponse = async () => {
-    await getMistralResponse(spokenText, speakResponse);
+  const stopListening = () => {
+    ExpoSpeechRecognitionModule.stop();
+  };
+
+  const getMistralResponse = async () => {
+    if (!spokenText.trim()) {
+      alert("Please say or type something first");
+      return;
+    }
+
+    setIsLoading(true);
+    try {
+      const response = await mistralApi.sendMessage(spokenText);
+      setMistralResponse(response);
+      speakResponse(response);
+    } catch (error) {
+      console.error("Mistral API error:", error);
+      setMistralResponse(`Error: ${error instanceof Error ? error.message : "Could not get a response"}`);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const speakResponse = async (text: string) => {
+    try {
+      setIsSpeaking(true);
+      await Speech.speak(text, {
+        language: 'fr-FR',
+        pitch: 1.0,
+        rate: 0.9,
+        voice: selectedVoice?.identifier,
+        onDone: () => setIsSpeaking(false),
+        onError: () => setIsSpeaking(false)
+      });
+    } catch (error) {
+      console.error("Speech error:", error);
+      setIsSpeaking(false);
+    }
+  };
+
+  const stopSpeaking = () => {
+    Speech.stop();
+    setIsSpeaking(false);
   };
 
   const resetAll = () => {
     setSpokenText("");
+    setMistralResponse("");
     stopSpeaking();
   };
 
   return (
     <View style={styles.container}>
-      <StatusBar style="light" />
-      <View style={styles.content}>
-        <ControlButtons
-          isListening={isListening}
-          startListening={handleStartListening}
-          stopListening={handleStopListening}
-          resetAll={resetAll}
-          styles={styles}
-        />
-
-        {/* La réponse est affichée par-dessus les boutons si disponible */}
-        {mistralResponse ? (
-          <View style={styles.responseOverlay}>
-            <ResponseDisplay
-              mistralResponse={mistralResponse}
-              isSpeaking={isSpeaking}
-              speakResponse={speakResponse}
-              stopSpeaking={stopSpeaking}
-              styles={styles}
-            />
-          </View>
-        ) : null}
-      </View>
+      <StatusBar style="auto" />
+      <VoiceInput
+        spokenText={spokenText}
+        onTextChange={setSpokenText}
+        isListening={isListening}
+        onStartListening={startListening}
+        onStopListening={stopListening}
+        onReset={resetAll}
+        onSend={getMistralResponse}
+        isLoading={isLoading}
+      />
+      <ResponseDisplay
+        response={mistralResponse}
+        isSpeaking={isSpeaking}
+        onToggleSpeech={isSpeaking ? stopSpeaking : () => speakResponse(mistralResponse)}
+      />
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#121212',
-  },
-  content: {
-    flex: 1,
-    marginTop: RNStatusBar.currentHeight || 0,
-  },
-  responseOverlay: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    backgroundColor: 'rgba(0, 0, 0, 0.8)',
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 20,
-  },
-  responseContainer: {
-    backgroundColor: '#1E1E1E',
-    padding: 20,
-    borderRadius: 12,
-    width: '100%',
-    maxHeight: '80%',
-  },
-  responseHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: 10,
-  },
-  responseTitle: {
-    fontSize: 22,
-    fontWeight: '600',
-    color: '#ffffff',
-  },
-  responseText: {
-    fontSize: 18,
-    lineHeight: 26,
-    color: '#ffffff',
-  },
-  speakButton: {
-    padding: 8,
-  },
-});

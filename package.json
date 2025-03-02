@@ -10,10 +10,12 @@
   },
   "dependencies": {
     "@expo/vector-icons": "^14.0.4",
+    "@react-native-voice/voice": "^3.2.4",
     "axios": "^1.8.1",
     "expo": "~52.0.37",
     "expo-dev-client": "~5.0.12",
     "expo-localization": "~16.0.1",
+    "expo-permissions": "^14.4.0",
     "expo-speech": "~13.0.1",
     "expo-speech-recognition": "^1.1.1",
     "expo-status-bar": "~2.0.1",
