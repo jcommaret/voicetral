@@ -8,20 +8,6 @@ const styles = StyleSheet.create({
     padding: 20,
     paddingTop: 50,
   },
-  // Styles de débogage
-  debugContainer: {
-    padding: 10,
-    marginBottom: 10,
-    backgroundColor: '#f8f9fa',
-    borderWidth: 1,
-    borderColor: '#ddd',
-    borderRadius: 8,
-  },
-  debugTitle: {
-    fontWeight: 'bold',
-    marginBottom: 5,
-    color: '#333',
-  },
   inputContainer: {
     width: "100%",
     padding: 10,
@@ -38,6 +24,8 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     textAlignVertical: "top",
     textAlign: "left",
+    borderWidth: 1,
+    borderColor: '#e0e0e0',
   },
   buttonsContainer: {
     flexDirection: "row",

@@ -1,52 +1,73 @@
-import {ChatMessage, MistralModel} from '../types';
+import { MISTRAL_API_KEY, MISTRAL_MODEL } from "@env";
 
-class MistralAPI {
-  private baseUrl = 'https://api.mistral.ai/v1';
+interface Message {
+  role: 'user' | 'assistant';
+  content: string;
+}
 
-  constructor(private apiKey: string) {}
+interface MistralResponse {
+  id: string;
+  object: string;
+  created: number;
+  model: string;
+  choices: {
+    index: number;
+    message: {
+      role: string;
+      content: string;
+    };
+    finish_reason: string;
+  }[];
+}
 
-  private async fetchAPI(endpoint: string, options: RequestInit = {}) {
-    const response = await fetch(`${this.baseUrl}${endpoint}`, {
-      ...options,
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${this.apiKey}`,
-        ...options.headers,
-      },
-    });
-
-    if (!response.ok) {
-      const errorData = await response.json();
-      throw new Error(
-        errorData.error?.message || `HTTP error! status: ${response.status}`,
-      );
-    }
-
-    return response.json();
-  }
-
-  async sendChatMessage(
-    modelId: string,
-    messages: ChatMessage[],
-  ): Promise<string> {
-    const data = await this.fetchAPI('/chat/completions', {
-      method: 'POST',
-      body: JSON.stringify({
-        model: modelId,
-        messages,
-        temperature: 0.7,
-        max_tokens: 1000,
-        stream: false,
-      }),
-    });
-
-    return data.choices[0].message.content;
-  }
-
-  async getAvailableModels(): Promise<MistralModel[]> {
-    const data = await this.fetchAPI('/models');
-    return data.data;
+class ApiError extends Error {
+  constructor(public status: number, message: string) {
+    super(message);
+    this.name = 'ApiError';
   }
 }
 
-export const createMistralAPI = (apiKey: string) => new MistralAPI(apiKey);
+export const mistralApi = {
+  async sendMessage(message: string): Promise<string> {
+    try {
+      const response = await fetch('https://api.mistral.ai/v1/chat/completions', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${MISTRAL_API_KEY}`,
+        },
+        body: JSON.stringify({
+          model: MISTRAL_MODEL,
+          messages: [
+            {
+              role: 'user',
+              content: message,
+            },
+          ],
+        }),
+      });
+
+      if (!response.ok) {
+        throw new ApiError(
+          response.status,
+          `API error: ${response.status} ${response.statusText}`
+        );
+      }
+
+      const data: MistralResponse = await response.json();
+
+      if (!data.choices || data.choices.length === 0) {
+        throw new Error('No response from Mistral');
+      }
+
+      return data.choices[0].message.content;
+    } catch (error) {
+      if (error instanceof ApiError) {
+        throw error;
+      }
+      throw new Error(
+        `Failed to get response: ${error instanceof Error ? error.message : 'Unknown error'}`
+      );
+    }
+  },
+};
