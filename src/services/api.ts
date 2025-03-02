@@ -1,6 +1,7 @@
 import { MISTRAL_API_KEY, MISTRAL_MODEL } from "@env";
 
-interface Message {
+// Interface utilisée pour typer les messages dans la requête API
+interface _Message {
   role: 'user' | 'assistant';
   content: string;
 }
