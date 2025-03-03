@@ -12,6 +12,7 @@
     "@expo/vector-icons": "^14.0.4",
     "@react-native-voice/voice": "^3.2.4",
     "axios": "^1.8.1",
+    "cross-fetch": "^4.1.0",
     "expo": "~52.0.37",
     "expo-dev-client": "~5.0.12",
     "expo-localization": "~16.0.1",
@@ -25,7 +26,8 @@
     "react-native-polyfill-globals": "^3.1.0",
     "react-native-reanimated": "~3.16.1",
     "react-native-svg": "15.8.0",
-    "react-native-url-polyfill": "^2.0.0"
+    "react-native-url-polyfill": "^2.0.0",
+    "web-streams-polyfill": "^3.3.3"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",

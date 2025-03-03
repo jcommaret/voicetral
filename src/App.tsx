@@ -1,64 +1,40 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { View } from "react-native";
 import { StatusBar } from "expo-status-bar";
-import { ExpoSpeechRecognitionModule, useSpeechRecognitionEvent } from "expo-speech-recognition";
-import * as Speech from 'expo-speech';
 
-import { VoiceInput, ResponseDisplay } from './components';
-import { mistralApi } from './services/api';
+import { VoiceInput } from './components';
+import { MistralQuery, VoiceRecognition, VoiceSpeech } from './services';
 import styles from './styles/styles';
 
 export default function App() {
   // State management
   const [spokenText, setSpokenText] = useState("");
-  const [mistralResponse, setMistralResponse] = useState("");
   const [isListening, setIsListening] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isSpeaking, setIsSpeaking] = useState(false);
-  const [availableVoices, setAvailableVoices] = useState<Speech.Voice[]>([]);
-  const [selectedVoice, setSelectedVoice] = useState<Speech.Voice | null>(null);
-
-  // Load available voices on startup
-  useEffect(() => {
-    const loadVoices = async () => {
-      try {
-        const voices = await Speech.getAvailableVoicesAsync();
-        const frenchVoices = voices.filter(voice => voice.language.startsWith('fr'));
-        setAvailableVoices(frenchVoices.length > 0 ? frenchVoices : voices);
-        if (frenchVoices.length > 0) {
-          setSelectedVoice(frenchVoices[0]);
-        } else if (voices.length > 0) {
-          setSelectedVoice(voices[0]);
-        }
-      } catch (error) {
-        console.error("Erreur lors du chargement des voix:", error);
-      }
-    };
-    loadVoices();
-  }, []);
 
   // Speech recognition event handlers
-  useSpeechRecognitionEvent("start", () => setIsListening(true));
-  useSpeechRecognitionEvent("end", () => {
+  VoiceRecognition.useSpeechRecognitionEvent("start", () => setIsListening(true));
+  VoiceRecognition.useSpeechRecognitionEvent("end", () => {
     setIsListening(false);
     if (spokenText.trim()) {
       getMistralResponse();
     }
   });
-  useSpeechRecognitionEvent("result", (event) => {
+  VoiceRecognition.useSpeechRecognitionEvent("result", (event) => {
     const transcript = event.results[0]?.transcript || "";
     setSpokenText(transcript);
   });
 
   const startListening = async () => {
     try {
-      const result = await ExpoSpeechRecognitionModule.requestPermissionsAsync();
+      const result = await VoiceRecognition.requestPermissions();
       if (!result.granted) {
         alert("Microphone permission is required");
         return;
       }
 
-      ExpoSpeechRecognitionModule.start({
+      VoiceRecognition.start({
         lang: "fr-FR",
         interimResults: true,
         maxAlternatives: 1,
@@ -72,7 +48,7 @@ export default function App() {
   };
 
   const stopListening = () => {
-    ExpoSpeechRecognitionModule.stop();
+    VoiceRecognition.stop();
   };
 
   const getMistralResponse = async () => {
@@ -83,12 +59,11 @@ export default function App() {
 
     setIsLoading(true);
     try {
-      const response = await mistralApi.sendMessage(spokenText);
-      setMistralResponse(response);
+      const response = await MistralQuery.sendMessage(spokenText);
       speakResponse(response);
     } catch (error) {
       console.error("Mistral API error:", error);
-      setMistralResponse(`Error: ${error instanceof Error ? error.message : "Could not get a response"}`);
+      speakResponse(`Erreur: ${error instanceof Error ? error.message : "Impossible d'obtenir une réponse"}`);
     } finally {
       setIsLoading(false);
     }
@@ -97,12 +72,14 @@ export default function App() {
   const speakResponse = async (text: string) => {
     try {
       setIsSpeaking(true);
-      await Speech.speak(text, {
+      await VoiceSpeech.speak(text, {
         language: 'fr-FR',
         pitch: 1.0,
         rate: 0.9,
-        voice: selectedVoice?.identifier,
-        onDone: () => setIsSpeaking(false),
+        onDone: () => {
+          setIsSpeaking(false);
+          setSpokenText(""); // Réinitialiser le texte après avoir parlé
+        },
         onError: () => setIsSpeaking(false)
       });
     } catch (error) {
@@ -112,13 +89,12 @@ export default function App() {
   };
 
   const stopSpeaking = () => {
-    Speech.stop();
+    VoiceSpeech.stop();
     setIsSpeaking(false);
   };
 
   const resetAll = () => {
     setSpokenText("");
-    setMistralResponse("");
     stopSpeaking();
   };
 
@@ -126,19 +102,11 @@ export default function App() {
     <View style={styles.container}>
       <StatusBar style="auto" />
       <VoiceInput
-        spokenText={spokenText}
-        onTextChange={setSpokenText}
         isListening={isListening}
         onStartListening={startListening}
         onStopListening={stopListening}
         onReset={resetAll}
-        onSend={getMistralResponse}
-        isLoading={isLoading}
-      />
-      <ResponseDisplay
-        response={mistralResponse}
-        isSpeaking={isSpeaking}
-        onToggleSpeech={isSpeaking ? stopSpeaking : () => speakResponse(mistralResponse)}
+        isLoading={isLoading || isSpeaking}
       />
     </View>
   );

@@ -1,81 +1,96 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, Dimensions } from "react-native";
 
-// Styles fixes sans thème
+const { width, height } = Dimensions.get('window');
+
+// Styles centralisés pour toute l'application
 const styles = StyleSheet.create({
+  // Styles généraux
   container: {
     flex: 1,
     backgroundColor: '#fff',
+    width: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+  },
+  
+  // Styles pour VoiceInput
+  microphoneContainer: {
+    height: height * 0.8,
+    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  microphoneText: {
+    color: 'white',
+    fontSize: 18,
+    marginTop: 20,
+    fontWeight: 'bold',
   },
   inputContainer: {
-    display:'none',
-  },
-  recognizedText: {
-    flex: 1,
     padding: 20,
-    backgroundColor: '#f0f0f0',
-    color: '#000',
-    borderRadius: 12,
-    fontSize: 18,
-    minHeight: 150,
-    marginBottom: 10,
-    textAlignVertical: "top",
-    textAlign: "left",
-    borderWidth: 1,
-    borderColor: '#e0e0e0',
-  },
-  buttonsContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    width: "100%",
     gap: 10,
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
-  iconButton: {
-    padding: 10,
-    borderRadius: 25,
-    width: 50,
-    height: 50,
-    justifyContent: "center",
-    alignItems: "center",
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#F5BF42',
+    borderRadius: 10,
+    padding: 20,
+    width: '100%',
   },
+  loadingText: {
+    color: 'white',
+    fontSize: 16,
+    marginTop: 10,
+    fontWeight: 'bold',
+  },
+  instructionContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#fed700',
+    borderRadius: 10,
+    padding: 20,
+    width: '100%',
+  },
+  instructionText: {
+    color: '#333',
+    fontSize: 16,
+    textAlign: 'center',
+    fontWeight: '500',
+  },
+  
+  // Styles pour les boutons
   clearButton: {
-    backgroundColor: '#8E8E93',
+    height: height * 0.2,
+    width: '100%',
+    backgroundColor: '#e00500',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  buttonText: {
+    color: 'white',
+    fontSize: 18,
+    marginTop: 10,
+    fontWeight: 'bold',
   },
   micButton: {
-    backgroundColor: '#007AFF',
+    backgroundColor: '#fed700',
   },
   listeningButton: {
-    backgroundColor: '#FF3B30',
+    backgroundColor: '#ff8204',
   },
-  sendButton: {
-    backgroundColor: '#34C759',
+  loadingButton: {
+    backgroundColor: '#0000ff',
   },
   disabledButton: {
     opacity: 0.6,
   },
-  responseContainer: {
-    display: 'none',
-  },
-  responseHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: 10,
-  },
-  responseTitle: {
-    fontSize: 18,
-    fontWeight: '600',
-    color: '#333',
-  },
-  responseText: {
-    fontSize: 16,
-    lineHeight: 24,
-    color: '#333',
-  },
-  speakButton: {
-    padding: 5,
-  },
- 
 });
 
 export default styles;

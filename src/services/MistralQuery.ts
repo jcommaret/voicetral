@@ -1,7 +1,6 @@
 import { MISTRAL_API_KEY, MISTRAL_MODEL } from "@env";
 import { Message } from "../types/chat";
 
-
 interface MistralResponse {
   id: string;
   object: string;
@@ -17,14 +16,14 @@ interface MistralResponse {
   }[];
 }
 
-class ApiError extends Error {
+export class ApiError extends Error {
   constructor(public status: number, message: string) {
     super(message);
     this.name = 'ApiError';
   }
 }
 
-export const mistralApi = {
+export const MistralQuery = {
   async sendMessage(message: string): Promise<string> {
     try {
       const response = await fetch('https://api.mistral.ai/v1/chat/completions', {
@@ -67,4 +66,4 @@ export const mistralApi = {
       );
     }
   },
-};
+}; 

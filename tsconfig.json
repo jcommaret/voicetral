@@ -3,15 +3,19 @@
   "compilerOptions": {
     "strict": true,
     "jsx": "react-native",
-    "typeRoots": ["./node_modules/@types", "./src"],
+    "typeRoots": ["./node_modules/@types", "./src/types"],
     "baseUrl": ".",
     "paths": {
-      "@env": ["./node_modules/react-native-dotenv"]
+      "@env": ["./node_modules/react-native-dotenv"],
+      "components": ["./src/components"],
+      "services": ["./src/services"], 
+      "styles": ["./src/styles"]
     }
   },
   "include": [
     "**/*.ts",
     "**/*.tsx",
-    "global.d.ts"
+    "global.d.ts",
+    "src/types/*.d.ts"
   ]
 }
