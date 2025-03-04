@@ -4,7 +4,7 @@ const { width, height } = Dimensions.get('window');
 
 // Styles centralisés pour toute l'application
 const styles = StyleSheet.create({
-  // Styles généraux
+  // Container principal
   container: {
     flex: 1,
     backgroundColor: '#fff',
@@ -14,9 +14,9 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   
-  // Styles pour VoiceInput
+  // Styles du microphone
   microphoneContainer: {
-    height: height * 0.8,
+    height: height * 0.7,
     width: '100%',
     justifyContent: 'center',
     alignItems: 'center',
@@ -27,47 +27,16 @@ const styles = StyleSheet.create({
     marginTop: 20,
     fontWeight: 'bold',
   },
-  inputContainer: {
-    padding: 20,
-    gap: 10,
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  loadingContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5BF42',
-    borderRadius: 10,
-    padding: 20,
-    width: '100%',
-  },
-  loadingText: {
-    color: 'white',
-    fontSize: 16,
-    marginTop: 10,
-    fontWeight: 'bold',
-  },
-  instructionContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+  micButton: {
     backgroundColor: '#fed700',
-    borderRadius: 10,
-    padding: 20,
-    width: '100%',
   },
-  instructionText: {
-    color: '#333',
-    fontSize: 16,
-    textAlign: 'center',
-    fontWeight: '500',
+  listeningButton: {
+    backgroundColor: '#ff8204',
   },
   
-  // Styles pour les boutons
+  // Styles du bouton de réinitialisation
   clearButton: {
-    height: height * 0.2,
+    height: height * 0.3,
     width: '100%',
     backgroundColor: '#e00500',
     justifyContent: 'center',
@@ -79,18 +48,11 @@ const styles = StyleSheet.create({
     marginTop: 10,
     fontWeight: 'bold',
   },
-  micButton: {
-    backgroundColor: '#fed700',
-  },
-  listeningButton: {
-    backgroundColor: '#ff8204',
-  },
-  loadingButton: {
-    backgroundColor: '#0000ff',
-  },
+  
+  // État désactivé
   disabledButton: {
     opacity: 0.6,
-  },
+  }
 });
 
 export default styles;

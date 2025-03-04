@@ -1,20 +1,5 @@
 import { MISTRAL_API_KEY, MISTRAL_MODEL } from "@env";
-import { Message } from "../types/chat";
-
-interface MistralResponse {
-  id: string;
-  object: string;
-  created: number;
-  model: string;
-  choices: {
-    index: number;
-    message: {
-      role: string;
-      content: string;
-    };
-    finish_reason: string;
-  }[];
-}
+import { MistralResponse } from "../types/services";
 
 export class ApiError extends Error {
   constructor(public status: number, message: string) {

@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { View } from "react-native";
 import { StatusBar } from "expo-status-bar";
 
-import { VoiceInput } from './components';
-import { MistralQuery, VoiceRecognition, VoiceSpeech } from './services';
+import { MicrophoneInput, ResetButton, VoiceResponse } from './components';
+import { MistralQuery, VoiceRecognition } from './services';
 import styles from './styles/styles';
 
 export default function App() {
@@ -12,6 +12,8 @@ export default function App() {
   const [isListening, setIsListening] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isSpeaking, setIsSpeaking] = useState(false);
+  const [responseText, setResponseText] = useState("");
+  const [shouldSpeak, setShouldSpeak] = useState(false);
 
   // Speech recognition event handlers
   VoiceRecognition.useSpeechRecognitionEvent("start", () => setIsListening(true));
@@ -60,53 +62,51 @@ export default function App() {
     setIsLoading(true);
     try {
       const response = await MistralQuery.sendMessage(spokenText);
-      speakResponse(response);
+      setResponseText(response);
+      setShouldSpeak(true);
     } catch (error) {
       console.error("Mistral API error:", error);
-      speakResponse(`Erreur: ${error instanceof Error ? error.message : "Impossible d'obtenir une réponse"}`);
+      setResponseText(`Erreur: ${error instanceof Error ? error.message : "Impossible d'obtenir une réponse"}`);
+      setShouldSpeak(true);
     } finally {
       setIsLoading(false);
     }
   };
 
-  const speakResponse = async (text: string) => {
-    try {
-      setIsSpeaking(true);
-      await VoiceSpeech.speak(text, {
-        language: 'fr-FR',
-        pitch: 1.0,
-        rate: 0.9,
-        onDone: () => {
-          setIsSpeaking(false);
-          setSpokenText(""); // Réinitialiser le texte après avoir parlé
-        },
-        onError: () => setIsSpeaking(false)
-      });
-    } catch (error) {
-      console.error("Speech error:", error);
-      setIsSpeaking(false);
-    }
-  };
-
-  const stopSpeaking = () => {
-    VoiceSpeech.stop();
-    setIsSpeaking(false);
-  };
-
   const resetAll = () => {
     setSpokenText("");
-    stopSpeaking();
+    setResponseText("");
+    setShouldSpeak(false);
+    setIsLoading(false);
+    setIsListening(false);
+    VoiceRecognition.stop();
+  };
+
+  const handleSpeakingStart = () => {
+    setIsSpeaking(true);
+  };
+
+  const handleSpeakingEnd = () => {
+    setIsSpeaking(false);
+    setShouldSpeak(false);
+    setResponseText("");
   };
 
   return (
     <View style={styles.container}>
       <StatusBar style="auto" />
-      <VoiceInput
+      <MicrophoneInput
         isListening={isListening}
+        isLoading={isLoading || isSpeaking}
         onStartListening={startListening}
         onStopListening={stopListening}
-        onReset={resetAll}
-        isLoading={isLoading || isSpeaking}
+      />
+      <ResetButton onReset={resetAll} />
+      <VoiceResponse
+        text={responseText}
+        shouldSpeak={shouldSpeak}
+        onSpeakingStart={handleSpeakingStart}
+        onSpeakingEnd={handleSpeakingEnd}
       />
     </View>
   );

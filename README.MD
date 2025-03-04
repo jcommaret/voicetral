@@ -1,93 +1,79 @@
 # Voicetral
 
-## Description
+Une application vocale interactive utilisant React Native et l'API Mistral pour une expérience conversationnelle entièrement basée sur la voix.
 
-Voicetral est une application mobile développée avec React Native et Expo qui permet d'interagir vocalement avec l'API Mistral. L'application utilise la reconnaissance vocale pour convertir la parole en texte, envoie ce texte à l'API Mistral, et utilise la synthèse vocale pour lire la réponse générée.
+## 🌟 Fonctionnalités
 
-## Fonctionnalités
+- Interface entièrement vocale
+- Reconnaissance vocale en français
+- Synthèse vocale pour les réponses
+- Intégration avec l'API Mistral
+- Design minimaliste et intuitif
 
-- Reconnaissance vocale pour capturer la parole de l'utilisateur
-- Intégration avec l'API Mistral pour générer des réponses intelligentes
-- Synthèse vocale pour lire les réponses générées
-- Support prioritaire pour les voix françaises
-- Interface utilisateur intuitive avec indicateurs d'état (écoute, chargement, lecture)
+## 🛠 Technologies Utilisées
 
-## Prérequis
+- React Native
+- Expo
+- TypeScript
+- API Mistral
+- React Native Voice
+- Expo Speech
 
-- Node.js (v14 ou supérieur)
-- npm ou yarn
-- Expo CLI
-- Compte Mistral AI pour obtenir une clé API
+## 🚀 Installation
 
-## Installation
-
-1. Clonez ce dépôt :
-
+1. Clonez le repository :
 ```bash
-git clone https://github.com/jcommaret/voicetral.git
+git clone https://github.com/votre-username/voicetral.git
 cd voicetral
 ```
 
 2. Installez les dépendances :
-
 ```bash
 npm install
-# ou
-yarn install
 ```
 
-3. Configuration des variables d'environnement :
-   - Créez ou modifiez le fichier `.env` à la racine du projet
-   - Ajoutez vos variables d'environnement selon le modèle suivant :
-   ```
-   MISTRAL_API_KEY=votre_clé_api_mistral
-   MISTRAL_MODEL=mistral-small-latest
-   ```
+3. Configurez les variables d'environnement :
+- Créez un fichier `.env` à la racine du projet
+- Ajoutez votre clé API Mistral :
+```
+MISTRAL_API_KEY=votre_clé_api
+```
 
-## Démarrage
-
-Pour lancer l'application en mode développement :
-
+4. Lancez l'application :
 ```bash
 npm start
-# ou
-yarn start
 ```
 
-Ensuite, vous pouvez exécuter l'application sur :
+## 📱 Utilisation
 
-- iOS : `npm run ios` ou `yarn ios`
-- Android : `npm run android` ou `yarn android`
+1. Appuyez sur le bouton microphone pour commencer à parler
+2. Posez votre question en français
+3. Attendez la réponse vocale de l'assistant
+4. Utilisez le bouton de réinitialisation pour une nouvelle conversation
 
-## Structure du projet
+## 🔧 Structure du Projet
 
 ```
-voicetral/
-├── .expo/                # Configuration Expo
-├── assets/               # Ressources statiques (images, polices, etc.)
-├── ios/                  # Configuration native iOS
-├── node_modules/         # Dépendances
-├── src/                  # Code source
-│   ├── components/       # Composants React
-│   │   ├── ResponseDisplay/ # Affichage des réponses
-│   │   └── VoiceInput/      # Entrée vocale
-│   ├── services/         # Services (API, polyfills)
-│   ├── styles/           # Styles de l'application
-│   └── App.tsx           # Composant principal
-├── .env                  # Variables d'environnement
-├── app.json              # Configuration de l'application
-└── package.json          # Dépendances et scripts
+src/
+├── components/
+│   ├── MicrophoneInput/
+│   ├── ResetButton/
+│   └── VoiceResponse/
+├── services/
+├── styles/
+└── types/
 ```
 
-## Technologies utilisées
+## 📝 Notes
 
-- React Native
-- Expo
-- Expo Speech Recognition
-- Expo Speech (synthèse vocale)
-- API Mistral AI
-- TypeScript
+- L'application nécessite l'autorisation d'accès au microphone
+- Une connexion Internet est requise pour le fonctionnement de l'API
+- L'application est optimisée pour une utilisation en français
 
-## Licence
+## 🤝 Contribution
 
-Voir le fichier [LICENCE.MD](./LICENCE.MD) pour plus d'informations.
+Les contributions sont les bienvenues ! N'hésitez pas à ouvrir une issue ou à soumettre une pull request.
+
+## 📄 Licence
+
+MIT

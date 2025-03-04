@@ -1,12 +1,5 @@
 import { ExpoSpeechRecognitionModule, useSpeechRecognitionEvent } from "expo-speech-recognition";
-
-export interface RecognitionOptions {
-  lang?: string;
-  interimResults?: boolean;
-  maxAlternatives?: number;
-  continuous?: boolean;
-  addsPunctuation?: boolean;
-}
+import { RecognitionOptions } from '../types/services';
 
 export const VoiceRecognition = {
   // Expose les événements de reconnaissance vocale

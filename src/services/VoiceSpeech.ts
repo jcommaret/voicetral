@@ -1,12 +1,5 @@
 import * as Speech from 'expo-speech';
-
-export interface SpeechOptions {
-  language?: string;
-  pitch?: number;
-  rate?: number;
-  onDone?: () => void;
-  onError?: () => void;
-}
+import { SpeechOptions } from '../types/services';
 
 export const VoiceSpeech = {
   // Parle le texte fourni
