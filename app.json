@@ -44,8 +44,8 @@
       [
         "expo-speech-recognition",
         {
-          "microphonePermission": "Autoriser $(PRODUCT_NAME) à utiliser le microphone.",
-          "speechRecognitionPermission": "Autoriser $(PRODUCT_NAME) à utiliser la reconnaissance vocale.",
+          "microphonePermission": "$(PRODUCT_NAME) nécessite l'accès au microphone pour la reconnaissance vocale.",
+          "speechRecognitionPermission": "Nous utilisons la reconnaissance vocale pour tranformer votre voix en texte",
           "androidSpeechServicePackages": [
             "com.google.android.googlequicksearchbox"
           ]
