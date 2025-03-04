@@ -3,7 +3,7 @@ import { View } from "react-native";
 import { StatusBar } from "expo-status-bar";
 
 import { MicrophoneInput, ResetButton, VoiceResponse } from './components';
-import { MistralQuery, VoiceRecognition } from './services';
+import { MistralQuery, VoiceRecognition, VoiceSpeech } from './services';
 import styles from './styles/styles';
 
 export default function App() {
@@ -80,6 +80,7 @@ export default function App() {
     setIsLoading(false);
     setIsListening(false);
     VoiceRecognition.stop();
+    VoiceSpeech.stop();
   };
 
   const handleSpeakingStart = () => {
