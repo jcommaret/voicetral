@@ -2,6 +2,7 @@
 export interface MicrophoneInputProps {
   isListening: boolean;
   isLoading: boolean;
+  isSpeaking: boolean;
   onStartListening: () => void;
   onStopListening: () => void;
 }

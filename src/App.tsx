@@ -98,7 +98,8 @@ export default function App() {
       <StatusBar style="auto" />
       <MicrophoneInput
         isListening={isListening}
-        isLoading={isLoading || isSpeaking}
+        isLoading={isLoading}
+        isSpeaking={isSpeaking}
         onStartListening={startListening}
         onStopListening={stopListening}
       />
