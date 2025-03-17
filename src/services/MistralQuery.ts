@@ -11,6 +11,9 @@ export class ApiError extends Error {
 export const MistralQuery = {
   async sendMessage(message: string): Promise<string> {
     try {
+
+      const aiInstructions = "Soit concise, réponds comme dans une conversation naturelle";
+
       const response = await fetch('https://api.mistral.ai/v1/chat/completions', {
         method: 'POST',
         headers: {
@@ -22,7 +25,7 @@ export const MistralQuery = {
           messages: [
             {
               role: 'user',
-              content: message,
+              content:  message + aiInstructions,
             },
           ],
         }),

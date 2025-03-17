@@ -1,6 +1,6 @@
 {
-  "name": "vocalia",
-  "version": "1.0.2",
+  "name": "voicetral",
+  "version": "1.0.1",
   "main": "index.ts",
   "scripts": {
     "start": "expo start",

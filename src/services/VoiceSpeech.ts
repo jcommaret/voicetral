@@ -7,7 +7,7 @@ export const VoiceSpeech = {
     const defaultOptions: SpeechOptions = {
       language: 'fr-FR',
       pitch: 1.0,
-      rate: 0.9,
+      rate: 1.0,
     };
     
     try {
