@@ -1,9 +1,9 @@
 {
   "expo": {
-    "name": "vocia",
-    "displayName": "Vocia",
+    "name": "voicia",
+    "displayName": "Voicia",
     "slug": "voicetral",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "automatic",
@@ -12,7 +12,7 @@
       "image": "./assets/splash-icon.png",
       "resizeMode": "contain",
       "backgroundColor": "#000000", 
-      "minDurationMs": 1000
+      "minDurationMs": 1500
     },
     "ios": {
       "supportsTablet": false,
