@@ -12,7 +12,7 @@ export const MistralQuery = {
   async sendMessage(message: string): Promise<string> {
     try {
 
-      const aiInstructions = "Soit concise, réponds comme dans une conversation naturelle";
+      const aiInstructions = "Soit concise, réponds comme dans une conversation naturelle, ne mets aucun smiley";
 
       const response = await fetch('https://api.mistral.ai/v1/chat/completions', {
         method: 'POST',
@@ -25,7 +25,7 @@ export const MistralQuery = {
           messages: [
             {
               role: 'user',
-              content:  message + aiInstructions,
+              content: aiInstructions + " " + message,
             },
           ],
         }),

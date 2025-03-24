@@ -1,13 +1,14 @@
 import * as Speech from 'expo-speech';
 import { SpeechOptions } from '../types/services';
+import { getDeviceLanguage } from '../utils/languageUtils';
 
 export const VoiceSpeech = {
   // Parle le texte fourni
   async speak(text: string, options: SpeechOptions = {}): Promise<void> {
     const defaultOptions: SpeechOptions = {
-      language: 'fr-FR',
+      language: getDeviceLanguage(),
       pitch: 1.0,
-      rate: 1.0,
+      rate: 0.9,
     };
     
     try {

@@ -1,5 +1,6 @@
 import { ExpoSpeechRecognitionModule, useSpeechRecognitionEvent } from "expo-speech-recognition";
 import { RecognitionOptions } from '../types/services';
+import { getDeviceLanguage } from '../utils/languageUtils';
 
 export const VoiceRecognition = {
   // Expose les événements de reconnaissance vocale
@@ -18,7 +19,7 @@ export const VoiceRecognition = {
   // Démarre la reconnaissance vocale
   start(options: RecognitionOptions = {}): void {
     const defaultOptions: RecognitionOptions = {
-      lang: "fr-FR",
+      lang: getDeviceLanguage(),
       interimResults: true,
       maxAlternatives: 1,
       continuous: false,
