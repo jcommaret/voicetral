@@ -1,7 +1,6 @@
 {
   "expo": {
     "name": "voicia",
-    "displayName": "Voicia",
     "slug": "voicetral",
     "version": "1.0.3",
     "orientation": "portrait",
@@ -21,18 +20,14 @@
         "ITSAppUsesNonExemptEncryption": false,
         "NSPhotoLibraryUsageDescription": "Cette application nécessite l'accès à votre photothèque pour sauvegarder des images.",
         "NSMicrophoneUsageDescription": "Cette application nécessite l'accès au microphone pour la reconnaissance vocale."
-      },
-      "usesNotifications": false,
-      "userInterfaceStyle": "automatic"
+      }
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.jcommaret.voicetral",
-      "useNextNotificationsApi": false,
-      "userInterfaceStyle": "automatic"
+      "package": "com.jcommaret.voicetral"
     },
     "web": {
       "favicon": "./assets/favicon.png"
