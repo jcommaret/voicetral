@@ -9,15 +9,15 @@
     "web": "expo start --web"
   },
   "dependencies": {
-    "@expo/config-plugins": "~9.0.0",
     "@expo/plist": "^0.2.2",
-    "@expo/vector-icons": "^14.0.4",
+    "@expo/vector-icons": "~14.0.4",
     "@react-native-voice/voice": "^3.1.5",
     "@xmldom/xmldom": "^0.9.8",
     "axios": "^1.12.0",
     "expo": "^52.0.44",
-    "expo-asset": "^12.0.8",
+    "expo-asset": "~11.0.5",
     "expo-dev-client": "~5.0.19",
+    "expo-font": "^14.0.8",
     "expo-localization": "~16.0.1",
     "expo-speech": "~13.0.1",
     "expo-speech-recognition": "^1.1.1",

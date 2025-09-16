@@ -10,7 +10,7 @@
     "splash": {
       "image": "./assets/splash-icon.png",
       "resizeMode": "contain",
-      "backgroundColor": "#000000", 
+      "backgroundColor": "#000000",
       "minDurationMs": 1500
     },
     "ios": {
@@ -48,7 +48,8 @@
           ]
         }
       ],
-      "expo-localization"
+      "expo-localization",
+      "expo-asset"
     ]
   }
 }
