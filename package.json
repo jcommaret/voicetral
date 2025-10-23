@@ -17,7 +17,6 @@
     "expo": "^52.0.44",
     "expo-asset": "~11.0.5",
     "expo-dev-client": "~5.0.19",
-    "expo-font": "~13.0.4",
     "expo-localization": "^17.0.7",
     "expo-speech": "~13.0.1",
     "expo-speech-recognition": "^1.1.1",
