@@ -46,10 +46,23 @@ function incrementAppVersion(type = 'patch') {
     const currentVersion = appJson.expo.version;
     const newVersion = incrementVersion(currentVersion, type);
     
+    // Sauvegarder le buildNumber actuel pour le préserver
+    const iosBuildNumber = appJson.expo.ios?.buildNumber;
+    
+    // Mettre à jour uniquement la version
     appJson.expo.version = newVersion;
+    
+    // Restaurer le buildNumber s'il existait (pour éviter qu'il soit modifié)
+    if (iosBuildNumber !== undefined && appJson.expo.ios) {
+      appJson.expo.ios.buildNumber = iosBuildNumber;
+    }
+    
     fs.writeFileSync(appJsonPath, JSON.stringify(appJson, null, 2) + '\n', 'utf8');
     
     console.log(`🔄 Version incrémentée : ${currentVersion} → ${newVersion} (${type})`);
+    if (iosBuildNumber !== undefined) {
+      console.log(`   BuildNumber préservé : ${iosBuildNumber}`);
+    }
     return newVersion;
   } catch (error) {
     console.error(`❌ Erreur lors de l'incrémentation de la version : ${error.message}`);

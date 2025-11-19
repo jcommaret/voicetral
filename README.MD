@@ -119,6 +119,35 @@ npm run build:ios:local -- --major
 5. Lance la build EAS locale
 6. Crée un tag Git annoté avec la nouvelle version (ex: `v1.0.4`)
 
+#### Build iOS locale avec soumission automatique
+
+Crée une build locale, incrémente la version, crée un tag, puis builder et soumet automatiquement sur EAS :
+
+```bash
+npm run build:ios:local:submit
+```
+
+Cette commande fait tout le processus en une seule fois :
+1. Build locale avec incrémentation
+2. Création du tag Git
+3. Build sur EAS (cloud)
+4. Soumission à l'App Store / TestFlight
+
+#### Build et soumission depuis un tag existant
+
+Si un tag Git a déjà été créé, vous pouvez builder et soumettre directement :
+
+```bash
+# Utilise automatiquement le dernier tag Git
+npm run build:submit:tag
+
+# Ou spécifier un tag précis
+npm run build:submit:tag -- 1.0.4
+
+# Avec un profil spécifique
+npm run build:submit:tag -- 1.0.4 --profile preview
+```
+
 ### Commandes de Synchronisation
 
 #### Synchroniser les versions manuellement
@@ -172,6 +201,8 @@ git push --tags
 | `npm run android` | Lance l'application sur Android (émulateur) |
 | `npm run web` | Lance l'application dans le navigateur |
 | `npm run build:ios:local` | Build iOS locale avec incrémentation automatique |
+| `npm run build:ios:local:submit` | Build locale + tag + build EAS + soumission automatique |
+| `npm run build:submit:tag` | Build et soumet depuis un tag Git existant |
 | `npm run sync:version` | Synchronise la version entre `app.json` et `package.json` |
 | `npm run submit:ios` | Soumet une build EAS à l'App Store/TestFlight |
 | `npm run submit:ios:local` | Soumet une build locale à l'App Store/TestFlight |
