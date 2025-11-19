@@ -36,6 +36,7 @@ npm install
 - Créez un fichier `.env` à la racine du projet
 - Ajoutez votre clé API Mistral :
 ```
+MISTRAL_MODEL=nom_de_modele
 MISTRAL_API_KEY=votre_clé_api
 ```
 

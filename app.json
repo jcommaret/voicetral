@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "voicia",
+    "name": "vocia",
     "slug": "voicetral",
     "version": "1.0.3",
     "orientation": "portrait",
@@ -20,7 +20,8 @@
         "ITSAppUsesNonExemptEncryption": false,
         "NSPhotoLibraryUsageDescription": "Cette application nécessite l'accès à votre photothèque pour sauvegarder des images.",
         "NSMicrophoneUsageDescription": "Cette application nécessite l'accès au microphone pour la reconnaissance vocale."
-      }
+      },
+      "buildNumber": "2"
     },
     "android": {
       "adaptiveIcon": {

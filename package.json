@@ -1,12 +1,16 @@
 {
   "name": "voicetral",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "main": "index.ts",
   "scripts": {
     "start": "expo start",
     "android": "expo run:android",
     "ios": "expo run:ios",
-    "web": "expo start --web"
+    "web": "expo start --web",
+    "build:ios:local": "node scripts/build-with-tag.js eas build --local --platform ios",
+    "sync:version": "node scripts/sync-version.js",
+    "submit:ios": "eas submit --platform ios",
+    "submit:ios:local": "eas submit --platform ios --path"
   },
   "dependencies": {
     "@expo/plist": "^0.4.7",
